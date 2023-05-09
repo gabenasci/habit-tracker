@@ -37,7 +37,9 @@ export function Home() {
         <View className="flex-row flex-wrap">
           {
             datesFromYearStart.map((date) => (
-              <HabitDay 
+              <HabitDay
+                amount={5}
+                completed={Math.round(Math.random() * 5)}
                 key={date.toISOString()} 
                 onPress={() => navigate('habit', { date: date.toISOString() })}
               />

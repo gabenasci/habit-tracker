@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons"
 import colors from 'tailwindcss/colors';
+import { useNavigation } from '@react-navigation/native'
 
 import { BackButton } from "../components/BackButton";
 import { Checkbox } from "../components/Checkbox";
@@ -9,6 +10,9 @@ import { Checkbox } from "../components/Checkbox";
 const availableWeekdays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado']
 
 export function  New() {
+  const { navigate } = useNavigation()
+
+  
   const [weekDays, setWeekDays] = useState<number[]>([]);
 
   function handleToggleWeekDay(weekDayIndex: number){
@@ -57,6 +61,7 @@ export function  New() {
       <TouchableOpacity
         className="w-full h-14 flex-row items-center justify-center bg-green-600 rounded-md mt-6"
         activeOpacity={0.7}
+        onPress={() => navigate('home')}
       >
         <Feather 
           name="check"

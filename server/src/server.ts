@@ -15,9 +15,10 @@ app.register(appRoutes)
 
 
 app.listen({
+  host: '10.0.0.80',
   port: 3003,
-}).then(()=> {
-  console.log('HTTP Server running on http://localhost:3003')
+}).then((address)=> {
+  console.log(`server listening on ${address}`)
 })
 
 // CORS: segurança para permitir acesso do front ao back

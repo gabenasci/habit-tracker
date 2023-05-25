@@ -1,16 +1,33 @@
-const weekdays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 import { HabitDay } from './HabitDay';
 import { generateRangeFromStartOfYear } from '../utils/generate-range-from-start-of-year';
+import { useEffect, useState } from 'react';
+import { api } from '../lib/axios';
+import dayjs from 'dayjs';
 
+const weekdays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
 const summaryDates = generateRangeFromStartOfYear()
 
 const minimumSummaryDates = 18 * 7 // 18 weeks
 const amountOfDaysToFill = minimumSummaryDates - summaryDates.length
 
-console.log(summaryDates)
+type Summary = {
+  id: string;
+  date: string;
+  amount: number;
+  completed: number;
+}[]
 
 export function SummaryTable() {
+  const [summary, setSummary] = useState<Summary>([])
+
+  useEffect(() => {
+    api.get('/summary').then(response => {
+      setSummary(response.data)
+      console.log(response.data)
+    })
+  }, [])
+
   return (
     <div className='flex w-full'>
       <div className='grid grid-rows-7 grid-flow-row gap-3'>
@@ -28,11 +45,16 @@ export function SummaryTable() {
       </div>
       <div className='grid grid-rows-7 grid-flow-col gap-3'>
         {summaryDates.map(date => {
+          const dayInSummary = summary.find(day => {
+            return dayjs(date).isSame(day.date, 'day')
+          })
+
           return (
             <HabitDay 
-              amount={5} 
-              completed={Math.round(Math.random() * 5)} 
               key={date.toString()} 
+              date={date}
+              amount={dayInSummary?.amount} 
+              completed={dayInSummary?.completed} 
             />
           )
         })}

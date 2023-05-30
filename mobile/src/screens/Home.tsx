@@ -25,7 +25,7 @@ type SummaryProps = Array<{
 export function Home() {
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState<SummaryProps | null>(null);
-
+  
   const { navigate } = useNavigation();
 
   async function fetchData() {
@@ -68,6 +68,7 @@ export function Home() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
+        contentOffset={{x: 0, y:800}}
       >
         {
           summary && (
